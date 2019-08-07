@@ -3,7 +3,7 @@ package org.modrarus.widget.service.model;
 /**
  * Контейнер объекта-виджета
  */
-public class Widget {
+public final class Widget {
 	/**
 	 * Идентификатор
 	 */
