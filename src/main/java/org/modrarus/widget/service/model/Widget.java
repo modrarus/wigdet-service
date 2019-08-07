@@ -143,4 +143,13 @@ public final class Widget {
 	Widget register(final Long _id, final Long _zIndex) {
 		return new Widget(_id, zIndex, x, y, width, heidth);
 	}
+	
+	/**
+	 * Переупорядочивание виджета по zIndex
+	 * Увеличивает значение zIndex на единицу
+	 * @return Новый экземпляр зарегистрированного виджета 
+	 */
+	Widget reorderZIndex() {
+		return new Widget(id, Long.valueOf(zIndex.longValue() + 1), x, y, width, heidth);
+	}
 }
