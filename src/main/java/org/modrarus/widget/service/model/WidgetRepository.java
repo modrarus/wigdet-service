@@ -22,7 +22,7 @@ public interface WidgetRepository {
 	 * Получение виджета по идентификатору
 	 * @param _id Идентификатор
 	 */
-	public Optional<Widget> getById(long _id);
+	public Optional<Widget> getById(Long _id);
 	
 	/**
 	 * Удаление виджета
