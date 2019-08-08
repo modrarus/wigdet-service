@@ -94,7 +94,7 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 		
 		final List<Widget> reorders = new ArrayList<Widget>();
 		for (final Widget widget : data.values()) {
-			if (widget.getZIndex().compareTo(_widget.getZIndex()) <= 0) {
+			if (widget.getZIndex().compareTo(_widget.getZIndex()) >= 0) {
 				reorders.add(widget);
 			}
 		}
@@ -140,7 +140,7 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 	
 	@Override
 	public boolean deleteById(final Long _id) {
-		if (_id == null || lastId.get() > _id.longValue()) {
+		if (_id == null || lastId.get() < _id.longValue()) {
 			return false;
 		}
 		
