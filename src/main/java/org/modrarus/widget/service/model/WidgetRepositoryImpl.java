@@ -59,7 +59,7 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 					_widget.register(newId, newZIndex);
 			
 			//Переупорядочивание zIndex в случае необходимости
-			if (newZIndex == null && maxZIndex.get() > widget.getZIndex().longValue()) {
+			if (newZIndex == null && maxZIndex.get() >= widget.getZIndex().longValue()) {
 				reorderZIndex(widget);
 			}
 			
