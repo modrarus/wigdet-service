@@ -26,6 +26,8 @@ public final class Widget {
 	/**
 	 * zIndex
 	 */
+	@NotNull(message = "Положение виджета по zIndex должно быть определено",
+			groups = {NewWidget.class, ExistedWidget.class})
 	private final Long zIndex;
 	/**
 	 * Позиция по оси абсцисс
