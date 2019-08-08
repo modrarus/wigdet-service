@@ -1,6 +1,7 @@
 package org.modrarus.widget.service.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -61,8 +62,18 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 				reorderZIndex(widget);
 			}
 			
+			//При обновлении удаление усларевшего индекса
+			if (newId == null) {
+				index.remove(data.get(widget.getId()).getZIndex());
+			}
+			
 			data.put(widget.getId(), widget);
 			index.put(widget.getZIndex(), widget.getId());
+			
+			//Обновление максимального zIndex в случае необходимости
+			if (newZIndex == null && widget.getZIndex().longValue() > maxZIndex.get()) {
+				maxZIndex.set(widget.getZIndex());
+			}
 			
 			return widget;
 		} finally {
@@ -134,7 +145,20 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 		
 		lock.writeLock().lock();
 		try {
-			return data.remove(_id) != null;
+			final Widget existed = data.remove(_id);
+			if (existed == null) {
+				return false;
+			}
+			
+			//Удаление индекса
+			index.remove(existed.getZIndex());
+			if (data.isEmpty()) {
+				maxZIndex.set(Long.MIN_VALUE);
+			} else if (maxZIndex.get() == existed.getZIndex().longValue()) {
+				maxZIndex.set(Collections.max(index.keySet()).longValue());
+			}
+			
+			return true;
 		} finally {
 			lock.writeLock().unlock();
 		}
