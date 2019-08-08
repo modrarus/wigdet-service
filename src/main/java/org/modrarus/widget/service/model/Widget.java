@@ -1,33 +1,56 @@
 package org.modrarus.widget.service.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 /**
  * Контейнер объекта-виджета
  */
 public final class Widget {
 	/**
+	 * Группа условий для нового виджета
+	 */
+	public static interface NewWidget{}
+	/**
+	 * Группа условий для существующего виджета
+	 */
+	public static interface ExistedWidget{}
+	
+	/**
 	 * Идентификатор
 	 */
-	private Long id;
+	@Null(message = "При создании нового виджета не может быть указан идентификатор",
+			groups = {NewWidget.class})
+	@NotNull(message = "Идентификатор виджета должен быть определен", groups = {ExistedWidget.class})
+	private final Long id;
 	/**
 	 * zIndex
 	 */
-	private Long zIndex;
+	private final Long zIndex;
 	/**
 	 * Позиция по оси абсцисс
 	 */
-	private long x;
+	@NotNull(message = "Положение виджета по оси абсцисс должно быть определено",
+			groups = {NewWidget.class, ExistedWidget.class})
+	private final Long x;
 	/**
 	 * Позиция по оси ординат
 	 */
-	private long y;
+	@NotNull(message = "Положение виджета по оси ординат должно быть определено",
+			groups = {NewWidget.class, ExistedWidget.class})
+	private final Long y;
 	/**
 	 * Ширина
 	 */
-	private long width;
+	@NotNull(message = "Ширина виджета должна быть определена",
+			groups = {NewWidget.class, ExistedWidget.class})
+	private final Long width;
 	/**
 	 * Высота
 	 */
-	private long heidth;
+	@NotNull(message = "Высота виджета должна быть определена",
+			groups = {NewWidget.class, ExistedWidget.class})
+	private final Long heidth;
 	
 	/**
 	 * Полный конструктор существующего виджета
@@ -38,27 +61,18 @@ public final class Widget {
 	 * @param _width  Ширина
 	 * @param _heidth Высота
 	 */
-	Widget(final Long _id, final Long _zIndex,
-			final long _x, final long _y, final long _width, final long _heidth) {
+	public Widget(final Long _id,
+			final Long _zIndex,
+			final Long _x,
+			final Long _y,
+			final Long _width,
+			final Long _heidth) {
 		id     = _id;
 		zIndex = _zIndex;
 		x      = _x;
 		y      = _y;
 		width  = _width;
 		heidth = _heidth;
-	}
-	
-	/**
-	 * Конструтор для построения нового виджета
-	 * @param _zIndex z-index
-	 * @param _x      Положение по оси абсцисс
-	 * @param _y      Положение по оси ординат
-	 * @param _width  Ширина
-	 * @param _heidth Высота
-	 */
-	public Widget(final Long _zIndex, final long _x, final long _y,
-			final long _width, final long _heidth) {
-		this(null, _zIndex, _x, _y, _width, _heidth);   
 	}
 	
 	/**
@@ -81,7 +95,7 @@ public final class Widget {
 	 * Получение положения по оси абсцисс
 	 * @return Положение по оси абсцисс
 	 */
-	public long getX() {
+	public Long getX() {
 		return x;
 	}
 	
@@ -89,7 +103,7 @@ public final class Widget {
 	 * Получение позиции по оси ординат
 	 * @return Положение по оси ординат
 	 */
-	public long getY() {
+	public Long getY() {
 		return y;
 	}
 	
@@ -97,7 +111,7 @@ public final class Widget {
 	 * Получение ширины
 	 * @return Ширина
 	 */
-	public long getWidth() {
+	public Long getWidth() {
 		return width;
 	}
 	
@@ -105,7 +119,7 @@ public final class Widget {
 	 * Получение высоты
 	 * @return Высота
 	 */
-	public long getHeidth() {
+	public Long getHeidth() {
 		return heidth;
 	}
 	
