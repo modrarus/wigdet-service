@@ -2,6 +2,9 @@ package org.modrarus.widget.service.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import org.modrarus.widget.service.model.Area;
 import org.modrarus.widget.service.model.Widget;
 import org.modrarus.widget.service.model.WidgetNotExistException;
 import org.modrarus.widget.service.model.WidgetRepository;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,6 +73,18 @@ public class WidgetController {
 	@GetMapping(value = "/api/v0.1/widgets/list", produces="application/json")
 	public List<Widget> getAll() {
 		return repository.getAll();
+	}
+	
+	/**
+	 * Получение списка всех виджетов в заданной прямоугольной зоне
+	 * @return Список всех виджетов
+	 */
+	@GetMapping(value = "/api/v0.1/widgets/list/area", produces="application/json")
+	public List<Widget> getAllInArea(@RequestParam(name = "xmin") @NotNull final Long _xMin,
+			@RequestParam(name = "xmax") @NotNull final Long _xMax,
+			@RequestParam(name = "ymin") @NotNull final Long _yMin,
+			@RequestParam(name = "ymax") @NotNull final Long _yMax) {
+		return repository.getAllInArea(new Area(_xMin, _xMax, _yMin, _yMax));
 	}
 	
 	/**

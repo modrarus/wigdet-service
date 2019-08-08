@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -176,6 +177,26 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 				}
 			});
 			return collection;
+		} finally {
+			lock.readLock().unlock();
+		}
+	}
+	
+	/**
+	 * Получение всех виджетов в определенной зоне
+	 * @param _area Зона
+	 * @return Список всех соответствующих виджетов
+	 */
+	@Override
+	public List<Widget> getAllInArea(final Area _area) {
+		if (_area == null || data.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
+		lock.readLock().lock();
+		try {
+			return data.values().stream()
+					.filter(widget -> _area.conteinWidget(widget)).collect(Collectors.toList());
 		} finally {
 			lock.readLock().unlock();
 		}

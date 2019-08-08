@@ -44,4 +44,11 @@ public interface WidgetRepository {
 	 * @return Список всех виджетов в репозитории
 	 */
 	public List<Widget> getAll();
+	
+	/**
+	 * Получение всех виджетов в определенной зоне
+	 * @param _area Зона
+	 * @return Список всех соответствующих виджетов
+	 */
+	public List<Widget> getAllInArea(Area _area);
 }
