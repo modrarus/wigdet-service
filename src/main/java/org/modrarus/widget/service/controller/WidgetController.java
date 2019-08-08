@@ -3,6 +3,7 @@ package org.modrarus.widget.service.controller;
 import java.util.List;
 
 import org.modrarus.widget.service.model.Widget;
+import org.modrarus.widget.service.model.WidgetNotExistException;
 import org.modrarus.widget.service.model.WidgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,9 @@ public class WidgetController {
 	 */
 	@DeleteMapping("/api/v0.1/widgets/delete/{widgetId}")
 	public void delete(@PathVariable("widgetId") final Long _id) {
-		repository.deleteById(_id);
+		if (!repository.deleteById(_id)) {
+			throw new WidgetNotExistException(_id);
+		}
 	}
 	
 	/**
@@ -75,6 +78,6 @@ public class WidgetController {
 	 */
 	@GetMapping(value = "/api/v0.1/widgets/get/{widgetId}", produces="application/json")
 	public Widget getWidget(@PathVariable("widgetId") final Long _id) {
-		return repository.getById(_id).orElse(null);
+		return repository.getById(_id).orElseThrow(() -> new WidgetNotExistException(_id));
 	}
 }

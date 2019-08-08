@@ -1,8 +1,12 @@
 package org.modrarus.widget.service.model;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Исключение при попытке обновления виджета с id не зарегистрированным в репозитории
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class UpdateForUnregisteredWidgetException extends RuntimeException {
 	private static final long serialVersionUID = -4231420264053639352L;
 	

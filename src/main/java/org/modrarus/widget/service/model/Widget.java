@@ -69,7 +69,39 @@ public final class Widget {
 			final Long _y,
 			final Long _width,
 			final Long _heidth) {
+		if (_id == null || _zIndex == null ||_x == null || _y == null || _width == null || _heidth == null) {
+			throw new NullPointerException(
+					"В существующем виджете должны быть определены все поля");
+		}
 		id     = _id;
+		zIndex = _zIndex;
+		x      = _x;
+		y      = _y;
+		width  = _width;
+		heidth = _heidth;
+	}
+	
+	/**
+	 * Конструктор нового виджета
+	 * @param _id     Идентификатор
+	 * @param _zIndex z-index
+	 * @param _x      Положение по оси абсцисс
+	 * @param _y      Положение по оси ординат
+	 * @param _width  Ширина
+	 * @param _heidth Высота
+	 */
+	public Widget(final Long _zIndex,
+			final Long _x,
+			final Long _y,
+			final Long _width,
+			final Long _heidth) {
+		if (_x == null || _y == null || _width == null || _heidth == null) {
+			throw new NullPointerException(
+					"Для создания нового виджета должы быть определены: положение по оси ординат, " +
+					"положение по оси абсцисс, ширина и высота.");
+		}
+		
+		id     = null;
 		zIndex = _zIndex;
 		x      = _x;
 		y      = _y;
