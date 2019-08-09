@@ -125,20 +125,6 @@ public final class WidgetRepositoryImpl implements WidgetRepository {
 	}
 	
 	@Override
-	public boolean delete(final Widget _widget) {
-		if (_widget == null || !_widget.hasId()) {
-			return false;
-		}
-		
-		lock.readLock().lock();
-		try {
-			return deleteById(_widget.getId());
-		} finally {
-			lock.readLock().unlock();
-		}
-	}
-	
-	@Override
 	public boolean deleteById(final Long _id) {
 		if (_id == null || lastId.get() < _id.longValue()) {
 			return false;
