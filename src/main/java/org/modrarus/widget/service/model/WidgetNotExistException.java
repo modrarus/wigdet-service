@@ -13,7 +13,7 @@ public class WidgetNotExistException extends RuntimeException {
 	private Long id;
 	
 	public WidgetNotExistException(final Long _id) {
-		super(new StringBuilder().append("Виджет с идентификатором ").append(_id).append(" не существует.").toString());
+		super("Виджет с идентификатором " + _id + " не существует.");
 		id = _id;
 	}
 	
